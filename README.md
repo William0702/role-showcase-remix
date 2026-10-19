@@ -7,7 +7,9 @@ Windows x64的Codex/Agent技能：素材问答、完整拉片、角色切分、�
 
 ## 查看真实测试演示
 
-[完整用户与 Agent 测试对话](docs/testing/full-conversation.zh-CN.md)：按时间顺序展示需求、实际问答、过程说明、成片交付、BGM 残留反馈与修订，共 16 条用户消息、49 条 Agent 消息。私人路径已脱敏，媒体及工具日志不公开；最终去 BGM 效果尚未获用户认可。
+[左右问答式实际测试演示](docs/testing/qa-demonstration.zh-CN.md)：左侧是 Agent 的问题，右侧是用户的回复，按实际制作顺序展示；已去除工具恢复、下载和运行进度等无关内容。保留需求调整、容量冲突及去 BGM 未通过的反馈。
+
+另可查看 [完整脱敏对话存档](docs/testing/full-conversation.zh-CN.md)。
 
 另见 [可复制测试模板](docs/testing/manual-test-template.zh-CN.md) 与 [测试资料入口](TESTING.md)。本案例是历史展示类测试，不代表新版剧情流程已经实测。
 
