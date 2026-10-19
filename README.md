@@ -9,6 +9,34 @@
 | **了解流程与蓝图** | [文档导航](https://github.com/William0702/role-showcase-remix/blob/main/docs/README.md) |
 | **维护和迭代技能** | [目录、命名与发布规范](https://github.com/William0702/role-showcase-remix/blob/main/docs/guides/maintain-and-release.zh-CN.md) |
 
+## 复制给 Agent：安装技能
+
+在支持本地文件和命令执行的 Codex / Agent 中复制发送以下内容（当前完整包支持 Windows x64）：
+
+```text
+请帮我安装这个 GitHub 仓库的 role-showcase-remix 技能：
+https://github.com/William0702/role-showcase-remix
+
+先阅读仓库 README 和安装说明，检查我的系统及已有安装。
+请使用 Releases 中的最新稳定版完整 Windows x64 安装包，按仓库安装流程执行；不要把仅含源码的仓库 ZIP 当作完整技能包。
+安装目录遵循当前环境的 CODEX_HOME；未设置时使用当前用户的 .codex/skills。
+如已安装，按仓库更新流程处理，保留本地修改、备份和制作项目。
+安装后执行依赖、包文件和 FilmCraft 自检，告诉我实际版本、安装路径、检查结果与未完成项，再给出开始使用的步骤。
+```
+
+## 复制给 Agent：更新技能
+
+已安装用户可以复制发送：
+
+```text
+请按照仓库说明，将本机 role-showcase-remix 更新到最新稳定版：
+https://github.com/William0702/role-showcase-remix
+
+先检查实际安装位置和版本，再使用仓库的更新入口。
+保留本地修改、备份及制作项目，不直接覆盖冲突文件。
+更新后执行自检，告诉我实际版本、检查结果和下一步使用方法。
+```
+
 ## 安装后怎么用
 
 新一轮 Codex 对话中发送：

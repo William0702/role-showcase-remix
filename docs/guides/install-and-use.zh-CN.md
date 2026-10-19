@@ -10,11 +10,17 @@ GitHub 自动生成的 **Source code (zip/tar.gz)** 只含开发源码，不是�
 
 默认安装到当前用户的 `.codex/skills/role-showcase-remix`；设置 CODEX_HOME 时使用其 skills 目录。新一轮 Codex 对话即可调用技能。需要联网安装时，可下载仓库源码并运行根目录 install-latest.cmd，由它获取完整稳定包；它不会把缺运行时的源码直接当成完整技能安装。
 
-也可以发给 Agent：
+也可以将下列内容复制给 Agent：
 
 ```text
-请安装 https://github.com/William0702/role-showcase-remix 的最新稳定版。
-先读安装说明，使用完整 Release，完成依赖与 FilmCraft 自检，并告诉我安装结果。
+请帮我安装这个 GitHub 仓库的 role-showcase-remix 技能：
+https://github.com/William0702/role-showcase-remix
+
+先阅读仓库 README 和安装说明，检查我的系统及已有安装。
+请使用 Releases 中的最新稳定版完整 Windows x64 安装包，按仓库安装流程执行；不要把仅含源码的仓库 ZIP 当作完整技能包。
+安装目录遵循当前环境的 CODEX_HOME；未设置时使用当前用户的 .codex/skills。
+如已安装，按仓库更新流程处理，保留本地修改、备份和制作项目。
+安装后执行依赖、包文件和 FilmCraft 自检，告诉我实际版本、安装路径、检查结果与未完成项，再给出开始使用的步骤。
 ```
 
 ## 2. 开始制作
@@ -37,3 +43,14 @@ GitHub 自动生成的 **Source code (zip/tar.gz)** 只含开发源码，不是�
 在技能安装目录运行 `update.cmd` 获取最新稳定版；`update.cmd -CheckOnly` 只查看；`update.cmd -Version 1.7.1` 选择指定已发布版本。默认保护本地修改并备份，不修改制作项目。
 
 main 是开发源码，可能比稳定版更新；推送源码不等于发布稳定版，普通用户不需要同步 main 才能使用。
+
+也可以让 Agent 帮你更新：
+
+```text
+请按照仓库说明，将本机 role-showcase-remix 更新到最新稳定版：
+https://github.com/William0702/role-showcase-remix
+
+先检查实际安装位置和版本，再使用仓库的更新入口。
+保留本地修改、备份及制作项目，不直接覆盖冲突文件。
+更新后执行自检，告诉我实际版本、检查结果和下一步使用方法。
+```
