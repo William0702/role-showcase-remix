@@ -5,6 +5,12 @@ Windows x64的Codex/Agent技能：素材问答、完整拉片、角色切分、�
 **仓库：** https://github.com/William0702/role-showcase-remix  
 **完整稳定版：** https://github.com/William0702/role-showcase-remix/releases/latest
 
+## 查看真实测试演示
+
+[完整用户与 Agent 测试对话](docs/testing/full-conversation.zh-CN.md)：按时间顺序展示需求、实际问答、过程说明、成片交付、BGM 残留反馈与修订，共 16 条用户消息、49 条 Agent 消息。私人路径已脱敏，媒体及工具日志不公开；最终去 BGM 效果尚未获用户认可。
+
+另见 [可复制测试模板](docs/testing/manual-test-template.zh-CN.md) 与 [测试资料入口](TESTING.md)。本案例是历史展示类测试，不代表新版剧情流程已经实测。
+
 ## 首次安装
 
 推荐下载本仓库源码ZIP，解压并运行install-latest.cmd，自动安装最新完整稳定版。Release如提供单个role-showcase-remix-v版本-windows-x64.zip，可直接解压运行install.cmd；如使用分片，则安装器自动下载、逐片校验和合并，用户不必手动拼接。离线用户可下载全部分片、release-parts.json和assemble-offline.ps1后，运行组包脚本还原完整ZIP。安装前会检查FilmCraft，没有可用版本则安装随包便携程序并执行实际导出自检。不需要GitHub账号、系统Python或另装FFmpeg。当前支持Windows x64。
