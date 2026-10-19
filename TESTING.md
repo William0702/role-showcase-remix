@@ -1,8 +1,12 @@
-# 测试与对话参考
+# 测试与实际演示
 
-- [左右问答式实际测试演示](docs/testing/qa-demonstration.zh-CN.md)：左侧 Agent 提问、右侧用户回复，已去除工具恢复等无关内容。
-- [完整用户与 Agent 测试对话](docs/testing/full-conversation.zh-CN.md)：按时间顺序展示全部返回的双方文字消息、问答选择、过程说明与修订。
-- [可复制的展示类混剪测试模板](docs/testing/manual-test-template.zh-CN.md)：分轮发送的话术、预期行为和测试记录表。
-- [真实测试对话整理](docs/testing/conversation-reference.zh-CN.md)：匿名化案例、已报告结果、失败反馈及未完成事项。
+| 想看什么 | 打开哪份资料 |
+| --- | --- |
+| 快速看真实问答过程 | [左右问答演示](docs/testing/showcase-qa.zh-CN.md) |
+| 自己复制话术测试 | [分步测试模板](docs/testing/showcase-test-template.zh-CN.md) |
+| 看结果与未解决问题 | [测试报告](docs/testing/showcase-test-report.zh-CN.md) |
+| 追溯双方全部文字消息 | [完整对话存档](docs/testing/showcase-transcript.zh-CN.md) |
 
-这些资料供人工测试、学习和版本回归使用。它们是仓库参考文档，不加入安装包，包含脱敏后的双方完整文字对话，不包含母片、私人路径、工具日志或制作工程。本次文档提交不改变稳定版技能的功能与版本。
+公开资料已脱敏，不包含母片和工程。它们是历史展示类案例；去 BGM 样段未获用户通过，新版剧情流程仍待真实测试。
+
+[完整文档导航](docs/README.md)

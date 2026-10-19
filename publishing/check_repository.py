@@ -10,8 +10,9 @@ for e in m['files']:
   if not e['path'].startswith(('tools/windows-x64/','tools/sources/','tools/software/')):raise FileNotFoundError(p)
   continue
  if p.stat().st_size!=e['size'] or hashlib.sha256(p.read_bytes()).hexdigest()!=e['sha256']:raise ValueError('Manifest mismatch '+e['path'])
-for p in (root/'scripts').glob('*.py'):ast.parse(p.read_text('utf-8-sig'))
-for p in [root/'SKILL.md',*(root/'references').glob('*.md')]:
+for folder in ('scripts','publishing'):
+ for p in (root/folder).glob('*.py'):ast.parse(p.read_text('utf-8-sig'))
+for p in [root/'SKILL.md',root/'README.md',root/'TESTING.md',*(root/'references').glob('*.md'),*(root/'docs').rglob('*.md')]:
  for ref in re.findall(r'\]\(([^)]+)\)',p.read_text('utf-8-sig')):
   if '://' in ref or ref.startswith('#') or chr(92) in ref or '{' in ref:continue
   target=ref.split('#')[0]

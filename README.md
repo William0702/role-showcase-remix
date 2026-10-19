@@ -1,62 +1,46 @@
-# Role Showcase Remix / 角色展示混剪
+# 角色展示与剧情混剪技能
 
-Windows x64的Codex/Agent技能：素材问答、完整拉片、角色切分、排列与次数核验、FilmCraft工程及原生导出；用户定稿后可选英雄定格、文字设计和两路动画提示词。
+面向 Windows x64 的 Codex / Agent 技能：通过问答理解需求，拉片整理素材，制作混剪，并按需进入英雄定格与文字设计。
 
-**仓库：** https://github.com/William0702/role-showcase-remix  
-**完整稳定版：** https://github.com/William0702/role-showcase-remix/releases/latest
+| 你想做什么 | 从这里开始 |
+| --- | --- |
+| **安装技能** | [下载完整稳定包](https://github.com/William0702/role-showcase-remix/releases/latest) → 解压 → 双击 **install.cmd** |
+| **学习实际使用过程** | [左侧 Agent 提问、右侧用户回复](https://github.com/William0702/role-showcase-remix/blob/main/docs/testing/showcase-qa.zh-CN.md) |
+| **了解流程与蓝图** | [文档导航](https://github.com/William0702/role-showcase-remix/blob/main/docs/README.md) |
+| **维护和迭代技能** | [目录、命名与发布规范](https://github.com/William0702/role-showcase-remix/blob/main/docs/guides/maintain-and-release.zh-CN.md) |
 
-## 查看真实测试演示
+## 安装后怎么用
 
-[左右问答式实际测试演示](docs/testing/qa-demonstration.zh-CN.md)：左侧是 Agent 的问题，右侧是用户的回复，按实际制作顺序展示；已去除工具恢复、下载和运行进度等无关内容。保留需求调整、容量冲突及去 BGM 未通过的反馈。
+新一轮 Codex 对话中发送：
 
-另可查看 [完整脱敏对话存档](docs/testing/full-conversation.zh-CN.md)。
-
-另见 [可复制测试模板](docs/testing/manual-test-template.zh-CN.md) 与 [测试资料入口](TESTING.md)。本案例是历史展示类测试，不代表新版剧情流程已经实测。
-
-## 首次安装
-
-推荐下载本仓库源码ZIP，解压并运行install-latest.cmd，自动安装最新完整稳定版。Release如提供单个role-showcase-remix-v版本-windows-x64.zip，可直接解压运行install.cmd；如使用分片，则安装器自动下载、逐片校验和合并，用户不必手动拼接。离线用户可下载全部分片、release-parts.json和assemble-offline.ps1后，运行组包脚本还原完整ZIP。安装前会检查FilmCraft，没有可用版本则安装随包便携程序并执行实际导出自检。不需要GitHub账号、系统Python或另装FFmpeg。当前支持Windows x64。
-
-默认目录为用户的.codex/skills/role-showcase-remix；设置CODEX_HOME时使用其skills目录。下一轮Codex对话可使用 $role-showcase-remix。
-
-联网安装：下载本仓库源码ZIP，解压运行install-latest.cmd；它下载完整稳定版并校验再安装。Source code ZIP只有源码，不能直接当作已经安装好完整运行时。也可以直接发给Agent：
-
-> 请安装 https://github.com/William0702/role-showcase-remix 的最新稳定版。先读README，使用完整Release或install-latest入口，完成运行时与FilmCraft自检，保留本地修改。
-
-## 更新与回退
-
-在已安装技能目录运行：
-
-```powershell
-./update.cmd
-./update.cmd -CheckOnly
-./update.cmd -Version 1.7.1
+```text
+使用 $role-showcase-remix。
+母片目录：[填写你的视频文件夹]
+本次目标：[说明你要制作什么]
+请先梳理这次需求，缺失内容分轮问我，项目目录由你整理。
 ```
 
-每次查询最新稳定Release、验证下载包与全部文件、检查修改、备份再升级并自检。CheckOnly只查看；Version固定已发布版本，指定旧版可回退。从源码目录也可运行install-latest.cmd -Update。自定义目录追加-Destination D:/MySkills/role-showcase-remix。
+完整包包含运行时与工具，安装时检查 FilmCraft 并自检。通常只下载一个 **windows-x64.zip**；GitHub 自动生成的 **Source code** 是开发源码。详见 [安装与更新说明](https://github.com/William0702/role-showcase-remix/blob/main/docs/guides/install-and-use.zh-CN.md)。
 
-本地修改时停止，不强制覆盖；备份在目标skills目录上级的skill-backups，失败缓存保留。项目素材和工程不因更新改动。普通用户以最新稳定Release为准，main可能有未发布修改。更新按需运行，不注册后台任务。
+## 哪些已经验证
 
-## 使用与确认
+| 模块 | 当前状态 |
+| --- | --- |
+| 展示混剪 | 已有原声制作测试与实际问答记录；内容理解和核听须实际完成 |
+| 剧情共创 | main 的 1.8.0 开发版已整理逐步确认、双方案和独立剪辑师流程，**真实成片链路待测** |
+| 英雄定格 | 成片定稿后可选，逐项确认；图像设计依赖执行环境的实际能力 |
+| 去 BGM | 盘点和提取不等于音乐分离；历史分离样段未获用户通过 |
 
-提供本地母片或目录。Agent整理独立项目，补问分组/数量/配额/输出/命名规则，实际查看全帧及边界，再切分、组合、原生导出和核验。变身、动作、景别变化不自动算新角色。
+**稳定安装包与 main 开发源码分开维护。** 推送新流程文档不代表已发布稳定版，也不代表测试通过。当前稳定版内容以 Release 为准。
 
-第二阶段：用户确认成片定稿→选择是否定格→单帧确认→名称/文案/排版→样张确认→同一文字母层派生原帧图/纯绿图/透明层→逐项确认→选择绿幕文字或角色环境微动文字动画提示词→确认交付。支持单项/整批重做和恢复旧版。
+## 仓库怎么读
 
-展示类自动技术链已有测试；真实角色判断、完整逐帧查看与听感验收由执行Agent负责。第二阶段为Agent问答模块，艺术字需要实际可用的图像生成/编辑能力，离线包不含AI模型或账号。提示词不等于已生成动画；实际生成、抠像和追加成片另行明确。音频盘点/提取不等于已实现去BGM且完整保留对白/音效。剧情蒙太奇有独立流程，不是已验证的一键FilmCraft剧情引擎。
+- **docs/**：给用户看的指南、演示与测试资料。
+- **SKILL.md、references/、agents/**：Agent 使用的技能入口与执行规则。
+- **scripts/、tools/**：运行代码及工具元信息；完整运行时随 Release 分发。
+- **publishing/、.github/**：维护者的构建与发布工具。
+- **CHANGELOG.md、licenses/、LICENSE**：版本记录及许可。
 
-## 维护者：迭代发布
+运行入口保留在根目录以兼容安装：`install.cmd` 安装，`run.cmd` 执行工具，`update.cmd` 更新。用户不必逐个阅读技术文件。
 
-Git保存源码及依赖哈希，大体积运行时与软件放完整Release（单ZIP或经校验的分片），不进Git。旧发布版本保留。
-
-1. 在仓库修改通用技能及CHANGELOG，不加入个人素材、机器状态或对话。
-2. 新增随包文件先加入package-manifest.json；执行python publishing/prepare_version.py 1.7.2更新版本和现有源码哈希，再执行python publishing/check_repository.py。
-3. 提交推送main，Actions选择Publish stable release→Run workflow。工作流复用上一稳定版中哈希匹配的运行依赖，构建完整包并执行doctor后发布。依赖变化须提供匹配运行时，不能跳过校验。
-4. 本机发布：python publishing/build_release.py --runtime-from 完整技能目录。检查dist/stage的完整包，再发布dist里的ZIP与SHA256SUMS.txt。首次版本用该本机流程建立；dist不提交Git。
-5. 用户运行update.cmd同步。push/PR自动源码检查，正式发布需维护者手动触发，不随普通文档修改自动发布。
-
-## 许可
-
-自编脚本按MIT（LICENSE）；Python、FFmpeg、FilmCraft、字体和Python库按各自原许可，声明与来源见licenses和tools元数据。完整包保留依赖与随包源码归档，不把全部第三方运行时统称MIT。FFmpeg本体归档不代表所有静态第三方库完整重建源码，信息见运行时参考与第三方构建说明。
-
-ZIP的SHA256及包清单用于损坏和一致性检查，并非独立数字签名。请使用本仓库正式Release。
+[全部文档](https://github.com/William0702/role-showcase-remix/blob/main/docs/README.md) · [测试资料](TESTING.md) · [版本记录](CHANGELOG.md) · [许可](LICENSE)
