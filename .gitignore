@@ -1,0 +1,13 @@
+dist/
+.release-cache/
+.software/
+_tests/
+_技能测试/
+__pycache__/
+*.pyc
+.env
+.env.*
+*.log
+tools/windows-x64/
+tools/sources/
+tools/software/*.zip

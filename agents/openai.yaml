@@ -1,0 +1,6 @@
+interface:
+  display_name: "展示与剧情批量混剪"
+  short_description: "提供视频并回答制作要求，由Agent自主整理、拉片和FilmCraft自动混剪交付"
+  default_prompt: "使用 $role-showcase-remix 自动混剪这些视频，先通过问答补齐要求，再自动整理项目、拉片、FilmCraft拼接导出和交付。"
+policy:
+  allow_implicit_invocation: true

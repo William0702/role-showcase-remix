@@ -1,0 +1,44 @@
+{
+  "downloads": [
+    {
+      "name": "python-3.12.10-embed-amd64.zip",
+      "url": "https://www.python.org/ftp/python/3.12.10/python-3.12.10-embed-amd64.zip",
+      "sha256": "4acbed6dd1c744b0376e3b1cf57ce906f9dc9e95e68824584c8099a63025a3c3",
+      "size": 11133606
+    },
+    {
+      "name": "ffmpeg-essentials.zip",
+      "url": "https://github.com/GyanD/codexffmpeg/releases/download/9.0.2/ffmpeg-9.0.2-essentials_build.zip",
+      "sha256": "60f467265b1e312373dbcd92200c2618a74850f98d3d078e94296bb3fa2047ba",
+      "size": 114768076
+    },
+    {
+      "name": "ffmpeg-9.0.2-source.tar.gz",
+      "url": "https://codeload.github.com/FFmpeg/FFmpeg/tar.gz/946fcce07b",
+      "sha256": "86f82e82456005881d1b97e9ce02f8a40bf2d181c8c958f8ae736886fdba2a34",
+      "size": 17320345
+    },
+    {
+      "name": "numpy-2.3.5-cp312-cp312-win_amd64.whl",
+      "url": "https://files.pythonhosted.org/packages/2d/57/8aeaf160312f7f489dea47ab61e430b5cb051f59a98ae68b7133ce8fa06a/numpy-2.3.5-cp312-cp312-win_amd64.whl",
+      "sha256": "86945f2ee6d10cdfd67bcb4069c1662dd711f7e2a4343db5cecec06b87cf31aa",
+      "size": 12782922
+    },
+    {
+      "name": "pillow-11.3.0-cp312-cp312-win_amd64.whl",
+      "url": "https://files.pythonhosted.org/packages/8c/ce/e7dfc873bdd9828f3b6e5c2bbb74e47a98ec23cc5c74fc4e54462f0d9204/pillow-11.3.0-cp312-cp312-win_amd64.whl",
+      "sha256": "a6444696fce635783440b7f7a9fc24b3ad10a9ea3f0ab66c5905be1c19ccf17d",
+      "size": 6986324
+    },
+    {
+      "name": "pyyaml-6.0.3-cp312-cp312-win_amd64.whl",
+      "url": "https://files.pythonhosted.org/packages/86/bf/899e81e4cce32febab4fb42bb97dcdf66bc135272882d1987881a4b519e9/pyyaml-6.0.3-cp312-cp312-win_amd64.whl",
+      "sha256": "5fcd34e47f6e0b794d17de1b4ff496c00986e1c83f7ab2fb8fcfe9616ff7477b",
+      "size": 154003
+    }
+  ],
+  "python": "3.12.10",
+  "numpy": "2.3.5",
+  "pillow": "11.3.0",
+  "platform": "Windows x64"
+}

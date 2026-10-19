@@ -1,0 +1,9 @@
+{
+  "version": "0.7.2",
+  "platform": "windows-x64",
+  "asset": "filmcraft-0.7.2-windows-x64-portable.zip",
+  "official_url": "https://github.com/storytold/filmcraft/releases/download/v0.7.2/filmcraft-0.7.2-windows-x64-portable.zip",
+  "archive_sha256": "8e22fabdf2f802573d3af4ad9993c05212dead5e933efda0fa290e825313cde7",
+  "checksum_verified_against_official_release": true,
+  "bytes": 70339046
+}

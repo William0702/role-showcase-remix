@@ -1,0 +1,31 @@
+name: Publish stable release
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: stable-release
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python publishing/check_repository.py
+      - run: python publishing/build_release.py
+      - name: Validate complete offline runtime
+        shell: pwsh
+        run: |
+          & './dist/stage/role-showcase-remix/tools/windows-x64/python/python.exe' -X utf8 './dist/stage/role-showcase-remix/scripts/remix.py' doctor --full
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Publish immutable stable version
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $version = (Get-Content package-manifest.json -Raw | ConvertFrom-Json).version
+          gh release create "v$version" "dist/role-showcase-remix-v$version-windows-x64.zip" "dist/SHA256SUMS.txt" --target $env:GITHUB_SHA --title "role-showcase-remix v$version" --generate-notes
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
