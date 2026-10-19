@@ -23,9 +23,9 @@ if ((Test-Path -LiteralPath $Destination) -and -not $Update) { throw 'Destinatio
 $archiveName = "role-showcase-remix-$tag-windows-x64.zip"
 $archiveAsset = @($release.assets | Where-Object { $_.name -eq $archiveName })
 $checksumAsset = @($release.assets | Where-Object { $_.name -eq 'SHA256SUMS.txt' })
-if ($archiveAsset.Count -ne 1 -or $checksumAsset.Count -ne 1) { throw 'Release archive/checksum asset missing or ambiguous.' }
+if ($checksumAsset.Count -ne 1 -or $archiveAsset.Count -gt 1) { throw 'Release checksum/archive asset missing or ambiguous.' }
 $releasePrefix = "https://github.com/$repository/releases/download/$tag/"
-foreach ($asset in @($archiveAsset[0], $checksumAsset[0])) {
+foreach ($asset in @($release.assets)) {
     if (-not ([string]$asset.browser_download_url).StartsWith($releasePrefix,[StringComparison]::Ordinal)) { throw 'Unexpected release asset origin.' }
 }
 $workDirectory = Join-Path ([IO.Path]::GetTempPath()) ('role-showcase-remix-update-' + [Guid]::NewGuid().ToString('N'))
@@ -34,7 +34,31 @@ $archivePath = Join-Path $workDirectory $archiveName
 $checksumPath = Join-Path $workDirectory 'SHA256SUMS.txt'
 Write-Output "Downloading $tag ..."
 Invoke-WebRequest -UseBasicParsing -Headers $headers -Uri $checksumAsset[0].browser_download_url -OutFile $checksumPath -TimeoutSec 240
-Invoke-WebRequest -UseBasicParsing -Headers $headers -Uri $archiveAsset[0].browser_download_url -OutFile $archivePath -TimeoutSec 600
+if ($archiveAsset.Count -eq 1) {
+    Invoke-WebRequest -UseBasicParsing -Headers $headers -Uri $archiveAsset[0].browser_download_url -OutFile $archivePath -TimeoutSec 600
+} else {
+    $partsAsset = @($release.assets | Where-Object { $_.name -eq 'release-parts.json' })
+    if ($partsAsset.Count -ne 1) { throw 'Neither a complete archive nor a parts manifest is available.' }
+    $partsInfo = Invoke-RestMethod -Headers $headers -Uri $partsAsset[0].browser_download_url
+    if ($partsInfo.archive_name -ne $archiveName -or $partsInfo.parts.Count -lt 1 -or $partsInfo.parts.Count -gt 256) { throw 'Invalid parts manifest.' }
+    $joined = [IO.File]::Create($archivePath)
+    $seenPartNames = @{}
+    try {
+        foreach ($part in $partsInfo.parts) {
+            $partName = [string]$part.name
+            if ($partName -notmatch ('^' + [regex]::Escape($archiveName) + '\.\d{3}$') -or $seenPartNames.ContainsKey($partName)) { throw 'Invalid/duplicate part name.' }
+            $seenPartNames[$partName] = $true
+            $partAsset = @($release.assets | Where-Object { $_.name -eq $partName })
+            if ($partAsset.Count -ne 1) { throw ('Missing release part: ' + $partName) }
+            $partPath = Join-Path $workDirectory $partName
+            Invoke-WebRequest -UseBasicParsing -Headers $headers -Uri $partAsset[0].browser_download_url -OutFile $partPath -TimeoutSec 600
+            if ((Get-Item -LiteralPath $partPath).Length -ne $part.size -or (Get-FileHash -LiteralPath $partPath -Algorithm SHA256).Hash.ToLowerInvariant() -ne $part.sha256) { throw ('Release part checksum failed: ' + $partName) }
+            $inputPart = [IO.File]::OpenRead($partPath)
+            try { $inputPart.CopyTo($joined) } finally { $inputPart.Dispose() }
+        }
+    } finally { $joined.Dispose() }
+    if ((Get-Item -LiteralPath $archivePath).Length -ne $partsInfo.archive_size -or (Get-FileHash -LiteralPath $archivePath -Algorithm SHA256).Hash.ToLowerInvariant() -ne $partsInfo.archive_sha256) { throw 'Assembled archive verification failed.' }
+}
 $expectedHash = $null
 foreach ($line in (Get-Content -LiteralPath $checksumPath -Encoding UTF8)) {
     if ($line -match '^([a-fA-F0-9]{64})\s+\*?(.+)$' -and $Matches[2] -eq $archiveName) { $expectedHash = $Matches[1].ToLowerInvariant() }

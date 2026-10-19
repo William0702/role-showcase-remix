@@ -10,8 +10,8 @@
     },
     {
       "path": "README.md",
-      "size": 4674,
-      "sha256": "8c09542b2482c51bc48fccf0c2a7ba98d24723534e2f6dfdabd9bb5d3a14f12d"
+      "size": 5027,
+      "sha256": "034f8e3e2e6bff691245a1a7ca03a98bb08145546340cc285fbb28642fb54723"
     },
     {
       "path": "SKILL.md",
@@ -165,8 +165,8 @@
     },
     {
       "path": "references/github-distribution.md",
-      "size": 1537,
-      "sha256": "a101f8106a31c3e09b48b77608fd2c5af80a4e57f2fc85f5bc30f87b3f8a6b9c"
+      "size": 1873,
+      "sha256": "345813913e042d66f5c3333abedbc26dffa945698d4636eb56b276277cade5ca"
     },
     {
       "path": "references/hero-animation-prompts.md",
@@ -320,8 +320,8 @@
     },
     {
       "path": "scripts/update-from-github.ps1",
-      "size": 5657,
-      "sha256": "c3076448cd9909df8064768857654910f854250a2f9e34e67975b08587bbcddc"
+      "size": 7575,
+      "sha256": "91916812eb770c7a1f8de7343d29ed855dfb92550f89188453ab648df591b244"
     },
     {
       "path": "tools/build_runtime.py",

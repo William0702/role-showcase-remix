@@ -7,7 +7,7 @@ Windows x64的Codex/Agent技能：素材问答、完整拉片、角色切分、�
 
 ## 首次安装
 
-打开最新Release，下载role-showcase-remix-v版本-windows-x64.zip，解压并运行install.cmd。安装前会检查FilmCraft，没有可用版本则安装随包便携程序并执行实际导出自检。不需要GitHub账号、系统Python或另装FFmpeg。当前支持Windows x64。
+推荐下载本仓库源码ZIP，解压并运行install-latest.cmd，自动安装最新完整稳定版。Release如提供单个role-showcase-remix-v版本-windows-x64.zip，可直接解压运行install.cmd；如使用分片，则安装器自动下载、逐片校验和合并，用户不必手动拼接。离线用户可下载全部分片、release-parts.json和assemble-offline.ps1后，运行组包脚本还原完整ZIP。安装前会检查FilmCraft，没有可用版本则安装随包便携程序并执行实际导出自检。不需要GitHub账号、系统Python或另装FFmpeg。当前支持Windows x64。
 
 默认目录为用户的.codex/skills/role-showcase-remix；设置CODEX_HOME时使用其skills目录。下一轮Codex对话可使用 $role-showcase-remix。
 
@@ -39,7 +39,7 @@ Windows x64的Codex/Agent技能：素材问答、完整拉片、角色切分、�
 
 ## 维护者：迭代发布
 
-Git保存源码及依赖哈希，大体积运行时与软件放完整Release，不进Git。旧发布版本保留。
+Git保存源码及依赖哈希，大体积运行时与软件放完整Release（单ZIP或经校验的分片），不进Git。旧发布版本保留。
 
 1. 在仓库修改通用技能及CHANGELOG，不加入个人素材、机器状态或对话。
 2. 新增随包文件先加入package-manifest.json；执行python publishing/prepare_version.py 1.7.2更新版本和现有源码哈希，再执行python publishing/check_repository.py。

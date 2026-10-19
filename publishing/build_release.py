@@ -16,7 +16,7 @@ def runtime_from_release():
  if not re.fullmatch(r'v[0-9]+\.[0-9]+\.[0-9]+',tag):raise ValueError('Invalid stable runtime release')
  assets={a['name']:a for a in release['assets']};name='role-showcase-remix-'+tag+'-windows-x64.zip'
  prefix='https://github.com/'+REPO+'/releases/download/'+tag+'/'
- for key in (name,'SHA256SUMS.txt'):
+ for key in ((name if name in assets else 'release-parts.json'),'SHA256SUMS.txt'):
   if not assets[key]['browser_download_url'].startswith(prefix):raise ValueError('Unexpected download origin')
  cache=ROOT/'.release-cache'/tag;cache.mkdir(parents=True,exist_ok=True)
  req=urllib.request.Request(assets['SHA256SUMS.txt']['browser_download_url'],headers={'User-Agent':'role-showcase-remix-release'})
@@ -24,8 +24,25 @@ def runtime_from_release():
  expected=next(line.split()[0] for line in sums.splitlines() if line.split()[-1].lstrip('*')==name)
  archive=cache/name
  if not archive.is_file() or digest(archive)!=expected:
-  req=urllib.request.Request(assets[name]['browser_download_url'],headers={'User-Agent':'role-showcase-remix-release'})
-  with urllib.request.urlopen(req,timeout=600) as response,archive.open('wb') as out:shutil.copyfileobj(response,out)
+  if name in assets:
+   req=urllib.request.Request(assets[name]['browser_download_url'],headers={'User-Agent':'role-showcase-remix-release'})
+   with urllib.request.urlopen(req,timeout=600) as response,archive.open('wb') as out:shutil.copyfileobj(response,out)
+  else:
+   info=get_json(assets['release-parts.json']['browser_download_url'])
+   if info['archive_name']!=name or info['archive_sha256']!=expected or not 1<=len(info['parts'])<=256:raise ValueError('Invalid runtime parts manifest')
+   with archive.open('wb') as out:
+    for part in info['parts']:
+     part_name=part['name']
+     if not re.fullmatch(re.escape(name)+r'\.\d{3}',part_name):raise ValueError('Invalid part name')
+     asset=assets[part_name]
+     if not asset['browser_download_url'].startswith(prefix):raise ValueError('Unexpected part origin')
+     path=cache/part_name
+     if not path.is_file() or digest(path)!=part['sha256']:
+      req=urllib.request.Request(asset['browser_download_url'],headers={'User-Agent':'role-showcase-remix-release'})
+      with urllib.request.urlopen(req,timeout=600) as response,path.open('wb') as target:shutil.copyfileobj(response,target)
+     if path.stat().st_size!=part['size'] or digest(path)!=part['sha256']:raise ValueError('Runtime part mismatch')
+     with path.open('rb') as source:shutil.copyfileobj(source,out)
+   if archive.stat().st_size!=info['archive_size']:raise ValueError('Assembled runtime size mismatch')
  if digest(archive)!=expected:raise ValueError('Runtime release checksum mismatch')
  unpack=cache/'unpack'
  if not (unpack/'role-showcase-remix/package-manifest.json').is_file():
