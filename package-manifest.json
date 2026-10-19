@@ -1,6 +1,6 @@
 {
   "name": "role-showcase-remix",
-  "version": "1.7.1",
+  "version": "1.8.0",
   "platform": "Windows x64",
   "files": [
     {
@@ -15,8 +15,8 @@
     },
     {
       "path": "SKILL.md",
-      "size": 8380,
-      "sha256": "3067ea241d81272d6513aa8001ee53b253ca285547a868f9c324e91dc7e07898"
+      "size": 9040,
+      "sha256": "25c0ba9d4e108662f025182565520fdc4735435ecd494078ae89a5ab945afdef"
     },
     {
       "path": "agents/openai.yaml",
@@ -135,8 +135,8 @@
     },
     {
       "path": "references/automatic-workflow.md",
-      "size": 8580,
-      "sha256": "b8dbdb9e4463d50e0266514789de59cf904a4c07c83df7d214d9163d226dae51"
+      "size": 8815,
+      "sha256": "4099a9a127637739088fc17f15b4ce35489b31b601f5f05fe20dc4be7f689df1"
     },
     {
       "path": "references/filmcraft-integration.md",
@@ -205,8 +205,8 @@
     },
     {
       "path": "references/startup-guide.md",
-      "size": 1958,
-      "sha256": "39c20e769f7c2c2a1ed150482978c8bb48277b96eb53ceba6918c75bd1989041"
+      "size": 2379,
+      "sha256": "6a8dc5d12fe60e4315890537ea875af924b04e3cf5d0c8f22857350892ff7543"
     },
     {
       "path": "references/startup-workflow.md",
@@ -215,8 +215,8 @@
     },
     {
       "path": "references/story-montage.md",
-      "size": 6836,
-      "sha256": "6b6ed925f6a68b64328408f3cbe6148de98c71597c523941f29d54097c63aac3"
+      "size": 7679,
+      "sha256": "1702e27efcddc1509cfde19be3d10f2dbc21f309e35130314c5aed8cdc264d87"
     },
     {
       "path": "references/workflow.md",
@@ -5867,6 +5867,11 @@
       "path": "update.cmd",
       "size": 145,
       "sha256": "ef6f44a19ef659a9fd799f92d464dcf03a8be1376cba288286869a03fce1e824"
+    },
+    {
+      "path": "references/story-collaboration.md",
+      "size": 7583,
+      "sha256": "874013c14669168ddc3a3c2b6299a93e134cfa85d6e2a1ee705b30f6684f7267"
     }
   ]
 }
