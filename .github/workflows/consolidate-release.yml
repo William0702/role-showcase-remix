@@ -1,0 +1,27 @@
+name: Consolidate existing release assets
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing stable tag to consolidate without rebuilding
+        required: true
+        default: v1.7.1
+permissions:
+  contents: write
+concurrency:
+  group: stable-release
+  cancel-in-progress: false
+jobs:
+  consolidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify, publish complete ZIP, then remove transport parts
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: python publishing/consolidate_release.py "$RELEASE_TAG"
