@@ -1,6 +1,6 @@
 {
   "name": "role-showcase-remix",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "platform": "Windows x64",
   "files": [
     {
@@ -10,13 +10,13 @@
     },
     {
       "path": "README.md",
-      "size": 4286,
-      "sha256": "ccc85d455c7e98988dfa85aae9eddfda1dfc968550e7073545f88cda6892a455"
+      "size": 6071,
+      "sha256": "ebe8bc322e7b3bc2f2ceb0cc00f222efdbb9090264ced7f3faf062407b3da188"
     },
     {
       "path": "SKILL.md",
-      "size": 9040,
-      "sha256": "25c0ba9d4e108662f025182565520fdc4735435ecd494078ae89a5ab945afdef"
+      "size": 9304,
+      "sha256": "7b90ff3d2e5abce6fb0ac8709809348bee6bd1ecc45de4a137f850d29790287a"
     },
     {
       "path": "agents/openai.yaml",
@@ -140,8 +140,8 @@
     },
     {
       "path": "references/filmcraft-integration.md",
-      "size": 4719,
-      "sha256": "162a3c307bf3bee1448feb449950930fa266f7ddc82f09c234c68051b4794431"
+      "size": 4998,
+      "sha256": "fb917fb1fddd155409adb60258d5850c3b0b9467e445940462532d3a588658c2"
     },
     {
       "path": "references/filmcraft-official/agents.md",
@@ -260,8 +260,8 @@
     },
     {
       "path": "scripts/filmcraft_ops.py",
-      "size": 12726,
-      "sha256": "7c39385e60925e819a4648a1fead41af9e7ab4fdd03823756166e5088f27c6fc"
+      "size": 14838,
+      "sha256": "0bb022c4482aa36b6960fc3155838dd473a4e53cb95ef3338cb6e03b2963e5cd"
     },
     {
       "path": "scripts/install_offline.py",
@@ -280,8 +280,8 @@
     },
     {
       "path": "scripts/render_ops.py",
-      "size": 22114,
-      "sha256": "36cb3d90c86ff20e7024d0dfc90be27e5d8ff961409f427b95afb5e02dc41d9f"
+      "size": 23497,
+      "sha256": "47721f7fc256d702f6e33283bc750357ec399a0af7c4248d2ff5202680111f18"
     },
     {
       "path": "scripts/software_ops.py",
@@ -5872,6 +5872,21 @@
       "path": "references/story-collaboration.md",
       "size": 7583,
       "sha256": "874013c14669168ddc3a3c2b6299a93e134cfa85d6e2a1ee705b30f6684f7267"
+    },
+    {
+      "path": "references/performance-cache.md",
+      "size": 3194,
+      "sha256": "c11850d8f4b6c531018a79a1df2df92b0d2766b5be3014fd301d0eb64574d3c3"
+    },
+    {
+      "path": "scripts/performance_cache.py",
+      "size": 7110,
+      "sha256": "ec90fe4e59eaa6f8dec66a6226686eb6b39a3ca877033f1776752d3fbdbb2b28"
+    },
+    {
+      "path": "scripts/test_performance_cache.py",
+      "size": 23183,
+      "sha256": "eaef2eb0b204ebd2ae121f25c0a9ddec64dbdf2b3f9480cc689a61a792746495"
     }
   ]
 }

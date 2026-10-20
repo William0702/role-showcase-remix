@@ -21,6 +21,19 @@ jobs:
         run: |
           & './dist/stage/role-showcase-remix/tools/windows-x64/python/python.exe' -X utf8 './dist/stage/role-showcase-remix/scripts/remix.py' doctor --full
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Run packaged cache and production regressions
+        shell: pwsh
+        run: |
+          $packageRoot = Join-Path $env:GITHUB_WORKSPACE 'dist/stage/role-showcase-remix'
+          $env:REMIX_CACHE_TEST_SCRATCH = Join-Path $env:RUNNER_TEMP 'remix-cache-tests'
+          Push-Location (Join-Path $packageRoot 'scripts')
+          try {
+            $runtime = Join-Path $packageRoot 'tools/windows-x64/python/python.exe'
+            foreach ($test in @('test_performance_cache.py','test_asset_ops.py','test_planner_ops.py','test_render_ops.py','test_cli_e2e.py','test_automation_ops.py')) {
+              & $runtime -X utf8 $test
+              if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            }
+          } finally { Pop-Location }
       - name: Publish immutable stable version
         shell: pwsh
         env:

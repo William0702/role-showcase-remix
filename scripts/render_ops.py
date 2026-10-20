@@ -14,6 +14,7 @@ from collections import Counter
 from fractions import Fraction
 from pathlib import Path
 from common import load_json, save_json, sha256, state_dir, project_path, require_approval, run_ffmpeg, probe
+import performance_cache
 
 
 def rounded(value):
@@ -25,8 +26,9 @@ def stream(info, kind):
     return next((s for s in info['streams'] if s['codec_type'] == kind), None)
 
 
-def metadata(path):
-    info = probe(path, frames=True)
+def metadata(path, cache_project=None):
+    info = performance_cache.metadata(cache_project, path,
+                                     lambda: probe(path, frames=True))
     video = stream(info, 'video')
     frames = [f for f in info.get('frames', []) if f.get('media_type') == 'video']
     if not video or not frames:
@@ -78,7 +80,7 @@ def source_spec(project, segment, config, trim_tail=0):
     path = project_path(project, segment['path'])
     if sha256(path) != segment['sha256']:
         raise ValueError('Source changed: '+segment['path'])
-    info, video, frames, pts, fps, cfr, duration = metadata(path)
+    info, video, frames, pts, fps, cfr, duration = metadata(path, cache_project=project)
     if int(segment['frames']) != len(frames):
         raise ValueError('Source frame count does not match plan: '+segment['path'])
     count = len(frames)-trim_tail
@@ -207,7 +209,7 @@ def correlate(left,right):
 
 
 def validate_video(project,video,config,path,temp,overrides=None):
-    info,v,frames,pts,fps,cfr,duration=metadata(path)
+    info,v,frames,pts,fps,cfr,duration=metadata(path, cache_project=project)
     if v.get('codec_name')!='h264' or v.get('pix_fmt')!='yuv420p': raise ValueError('Wrong output codec/pixel format')
     if (v['width'],v['height'])!=(int(config.get('output_width',1280)),int(config.get('output_height',720))): raise ValueError('Wrong output dimensions')
     if fps!=output_fps(config) or not cfr: raise ValueError('Wrong output FPS')
@@ -244,6 +246,28 @@ def validate_video(project,video,config,path,temp,overrides=None):
     result['expected_frames']=offset;result['actual_frames']=len(frames)
     result['passed']=len(frames)==offset and all(x['passed'] for x in result['segments'])
     return result
+
+
+def validate_video_cached(project, video, config, path, temp, overrides=None,
+                          context=None, force=False):
+    """Reuse a technical report only for the exact current validation inputs."""
+    root = Path(project).resolve()
+    def binding():
+        sources = []
+        for segment in video['segments']:
+            source = project_path(root, segment['path'])
+            actual = sha256(source)
+            if actual != segment['sha256']:
+                raise ValueError('Source changed: '+segment['path'])
+            sources.append(dict(segment=segment, actual_sha256=actual))
+        plan = state_dir(root)/'plan.json'
+        return dict(implementation=performance_cache.implementation('validation'),
+                    output_sha256=sha256(path), sources=sources,
+                    video=video, config=config, overrides=overrides or {},
+                    plan_sha256=sha256(plan) if plan.exists() else None,
+                    context=(context() if callable(context) else context) or {})
+    return performance_cache.validated_report(root, binding,
+        lambda: validate_video(root, video, config, path, temp, overrides), force)
 
 
 def rendered_state(project):

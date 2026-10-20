@@ -77,7 +77,7 @@ def build(args):
             if normalized.exists():raise ValueError('Existing compatibility media preserved: '+str(normalized))
             graph=f"[0:v:0]{r.visual_filter(spec,cfg)}[v];[0:a:0]{r.audio_filter(spec)}[a]"
             run_ffmpeg(['-y','-i',spec['path'],'-filter_complex',graph,'-map','[v]','-map','[a]','-c:v','libx264','-profile:v','baseline','-crf','12','-preset','medium','-pix_fmt','yuv420p','-c:a','pcm_s16le','-ar','48000','-ac','2','-fps_mode','passthrough',normalized])
-            info=r.metadata(normalized)
+            info=r.metadata(normalized, cache_project=root)
             if len(info[2])!=spec['target_frames']:raise ValueError('Compatibility frame count mismatch')
             imported=call(cli,['--project',q,'--save','import',normalized])
             if imported.get('errors') or len(imported['items'])!=1:raise ValueError('FilmCraft import failed')
@@ -112,7 +112,9 @@ def export(args):
             print('Reused native output '+vid,flush=True)
         else:call(cli,['--project',q,'export',output,'--format','h264','--gpu-rendering','off','--settings',json.dumps({'crf':plan['config'].get('crf',18),'hardwareEncoding':'off'})],False)
         with tempfile.TemporaryDirectory(dir=q.parent) as td:
-            try:report=r.validate_video(root,video,plan['config'],output,Path(td))
+            try:report=r.validate_video_cached(root,video,plan['config'],output,Path(td),
+                    context=lambda:validation_context(root, rec, cli, planhash),
+                    force=getattr(args,'force_recheck',False))
             except (ValueError,RuntimeError) as error:report={'passed':False,'error':str(error)}
         save_json(q.parent/'native-validation.json',report)
         rec['native_output']=str(output.relative_to(root));rec['native_sha256']=sha256(output);rec['native_passed']=report['passed']
@@ -121,6 +123,30 @@ def export(args):
         print('PASS native FilmCraft export: '+str(output))
     # This is an alternate version of an existing plan, not an extra use.
     print('Original delivery and usage ledger preserved')
+
+def validation_context(root, record, cli, plan_hash):
+    return {'plan_sha256':plan_hash,
+            'editable_project_sha256':sha256(project_path(root,record['path'])),
+            'compatibility_media':[{'segment_id':s['segment_id'],
+                'sha256':sha256(project_path(root,s['path']))} for s in record['segments']],
+            'filmcraft_cli_sha256':sha256(cli)}
+
+
+def existing_validation_cli(args):
+    """Delivery must not discover/install an editor just to validate a file."""
+    explicit=getattr(args,'cli',None) or os.environ.get('REMIX_FILMCRAFT_CLI')
+    if explicit:
+        return str(Path(explicit).resolve()) if Path(explicit).is_file() else None
+    state=ROOT/'.software/filmcraft.json'
+    if state.is_file():
+        try:
+            candidate=Path(load_json(state)['cli'])
+            if candidate.is_file():return str(candidate.resolve())
+        except (OSError,ValueError,KeyError,TypeError):
+            pass
+    candidate=ROOT/'tools/windows-x64/filmcraft-cli.exe'
+    return str(candidate) if candidate.is_file() else None
+
 
 def deliver(args):
     root=Path(args.project).resolve();plan,ph=r.read_plan(root)
@@ -133,7 +159,17 @@ def deliver(args):
         for media in rec['segments']:
             if sha256(project_path(root,media['path']))!=media['sha256']:raise ValueError('Native compatibility media changed')
         with tempfile.TemporaryDirectory(dir=q.parent) as td:
-            report=r.validate_video(root,video,plan['config'],source,Path(td))
+            cli=existing_validation_cli(args)
+            if cli is None:
+                if getattr(args,'force_recheck',False):
+                    r.performance_cache.revoke_validation(root,sha256(source))
+                report=r.validate_video(root,video,plan['config'],source,Path(td))
+                report['validation_cache']={'status':'bypassed',
+                    'reason':'FilmCraft identity unavailable; full validation performed'}
+            else:
+                report=r.validate_video_cached(root,video,plan['config'],source,Path(td),
+                    context=lambda:validation_context(root,rec,cli,ph),
+                    force=getattr(args,'force_recheck',False))
         if not report['passed']:raise ValueError('Native delivery failed independent verification')
         previous=next((x for x in state['videos'] if x['video_id']==vid),None)
         if previous and previous.get('plan_sha256')==ph and previous.get('sha256')==rec['native_sha256'] and project_path(root,previous['path']).is_file() and sha256(project_path(root,previous['path']))==rec['native_sha256']:
@@ -162,3 +198,6 @@ def register(sub):
     for name,fn in [('filmcraft-doctor',doctor),('filmcraft-project',build),('filmcraft-export',export),('filmcraft-deliver',deliver)]:
         p=sub.add_parser(name);p.add_argument('--cli');p.set_defaults(func=fn)
         if name!='filmcraft-doctor':p.add_argument('--project',required=True);p.add_argument('--only')
+        if name in ('filmcraft-export','filmcraft-deliver'):
+            p.add_argument('--force-recheck',action='store_true',
+                help='Recompute all-frame and stereo checks instead of reusing technical evidence')
