@@ -13,9 +13,12 @@
 
 ## 执行流程
 
+- **[展示与剧情双方向可视化蓝图](guides/workflow-blueprints.zh-CN.md)**
+
 - [技能总入口](../SKILL.md)
 - [展示类自动流程](../references/automatic-workflow.md)
-- [剧情共创与独立审阅蓝图（开发中、待实测）](../references/story-collaboration.md)
+- [剧情全池共创与独立审阅蓝图（开发源码、待验证）](../references/story-collaboration.md)
+- [剧情全池索引及 A/B 配对标准](../references/story-pairing.md)
 - [英雄定格与文字设计](../references/hero-freeze-workflow.md)
 - [音频问答与能力边界](../references/post-export-audio.md)
 

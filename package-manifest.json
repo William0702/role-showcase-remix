@@ -1,6 +1,6 @@
 {
   "name": "role-showcase-remix",
-  "version": "1.8.1",
+  "version": "1.9.0",
   "platform": "Windows x64",
   "files": [
     {
@@ -10,13 +10,13 @@
     },
     {
       "path": "README.md",
-      "size": 6071,
-      "sha256": "ebe8bc322e7b3bc2f2ceb0cc00f222efdbb9090264ced7f3faf062407b3da188"
+      "size": 6872,
+      "sha256": "4bbc6497570dd6459c505fce6667f76a6986eff9c5699e56b2401baf7ca971e0"
     },
     {
       "path": "SKILL.md",
-      "size": 9304,
-      "sha256": "7b90ff3d2e5abce6fb0ac8709809348bee6bd1ecc45de4a137f850d29790287a"
+      "size": 9547,
+      "sha256": "ae9348b1d34ba125bd30c03fe0fb4103094109771b74c7d849f5d02f0f8e6d82"
     },
     {
       "path": "agents/openai.yaml",
@@ -205,8 +205,8 @@
     },
     {
       "path": "references/startup-guide.md",
-      "size": 2379,
-      "sha256": "6a8dc5d12fe60e4315890537ea875af924b04e3cf5d0c8f22857350892ff7543"
+      "size": 2489,
+      "sha256": "0997c689b6d853b0fd4b0ad3b4ee5baf2a4ea30a3cd7021b951c04f8fe4b4131"
     },
     {
       "path": "references/startup-workflow.md",
@@ -215,8 +215,8 @@
     },
     {
       "path": "references/story-montage.md",
-      "size": 7679,
-      "sha256": "1702e27efcddc1509cfde19be3d10f2dbc21f309e35130314c5aed8cdc264d87"
+      "size": 9591,
+      "sha256": "ecc7fb9b6676c127a6010d08b5d11f4895226f990bb88cb564b6c083d2ecbe02"
     },
     {
       "path": "references/workflow.md",
@@ -5870,8 +5870,8 @@
     },
     {
       "path": "references/story-collaboration.md",
-      "size": 7583,
-      "sha256": "874013c14669168ddc3a3c2b6299a93e134cfa85d6e2a1ee705b30f6684f7267"
+      "size": 8814,
+      "sha256": "fdef66003f9c228c05a5cf0f4dce1d7e6c83c35e07f91915dac6df7b3aaef499"
     },
     {
       "path": "references/performance-cache.md",
@@ -5887,6 +5887,11 @@
       "path": "scripts/test_performance_cache.py",
       "size": 23183,
       "sha256": "eaef2eb0b204ebd2ae121f25c0a9ddec64dbdf2b3f9480cc689a61a792746495"
+    },
+    {
+      "path": "references/story-pairing.md",
+      "size": 5856,
+      "sha256": "135c4b0a967cd742d3d38f0b3c4c430e2e05031177fd0796bd1453d270653509"
     }
   ]
 }

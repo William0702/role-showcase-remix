@@ -98,3 +98,12 @@ https://github.com/William0702/role-showcase-remix
 原有审批、配额、完整内容审阅、接点查看和实际核听要求均保留。最终 `verify` 仍做完整验证；兼容转码共享、并行导出与硬件编码尚未在本版实现。
 
 需要排障时使用 `filmcraft-export --force-recheck` / `filmcraft-deliver --force-recheck`，或对当前进程设置 `REMIX_DISABLE_CACHE=1`。详见 [缓存与强制复检说明](https://github.com/William0702/role-showcase-remix/blob/main/references/performance-cache.md)。
+
+
+## 1.9.0 开发源码：双方向流程蓝图
+
+[查看展示类与剧情 A/B 两张可视化蓝图](https://github.com/William0702/role-showcase-remix/blob/main/docs/guides/workflow-blueprints.zh-CN.md)。
+
+展示类保留已授权自动制作及逐步确认两种方式；剧情类收紧为完整理解→全池内容索引→理解复核→全池筛配→方案与代表样片→同规则批量→定点返修。先判断内容关系，不为覆盖强配或强凑蒙太奇；动态审片、核听与用户认可分别记录。
+
+本节对应 main 上的 1.9.0 开发源码，尚未发布完整 Release；运行脚本与 v1.8.1 性能缓存保持原样。新流程仍待真实整轮验证，不宣称已提速或蒙太奇通过。普通安装与更新继续使用最新已发布 Release。
